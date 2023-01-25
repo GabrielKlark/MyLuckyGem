@@ -1,0 +1,129 @@
+:root {
+    --color1: #0000ff;
+    --color2: #ff0000;
+    --color3: #800080;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.bg-color1 {
+    background-color: var(--color1);
+}
+
+.bg-color2 {
+    background-color: var(--color2);
+}
+
+.bg-color3 {
+    background-color: var(--color3);
+}
+
+header {
+    background-color: #4e4eff;
+    height: 20px;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+}
+header span {
+    background-color: #a1a1fa;
+    border-radius: 5px;
+}
+
+.sec-game {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    height: 100vh;
+    width: 100vw;
+}
+
+.game-gems {
+    justify-content: space-evenly;
+    display: flex;
+}
+
+.gem-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 5px;
+    height: 70px;
+    width: 70px;
+
+    transition: all 50ms;
+}
+.notselected-gem-box {
+    border: 10px solid rgba(0, 0, 0, 0);
+}
+.selected-gem-box {
+    animation: border-blink 1000ms forwards infinite;
+}
+/*Animation para quando uma gem for selecionada por mais de 1s, ela ficar piscando*/
+@keyframes border-blink {
+    0% {
+        border: 10px solid #000;
+    }
+    100% {
+        border: 10px solid rgba(0, 0, 0, 0);
+    }
+}
+
+.gem {
+    width: 100%;
+    height: 100%;
+}
+
+.main-buttons {
+    align-items: center;
+    justify-content: space-around;
+    display: flex;
+
+    position: absolute;
+    bottom: 0;
+
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+.main-buttons .color-selection {
+    display: flex;
+    border: 4px solid #000;
+}
+
+.main-buttons .rdo_color_background {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 3px solid #000;
+
+    height: 50px;
+    width: 50px;
+}
+
+.main-buttons .game button {
+    border: 4px solid #000;
+
+    height: 60px;
+    width: 200px;
+
+    transition: all 500ms;
+}
+.main-buttons .game button:hover {
+    background-color: #000;
+}
+
+.main-buttons .bet-selection input {
+    border: 4px solid #000;
+
+    height: 50px;
+    width: 80px;
+}
