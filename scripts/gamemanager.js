@@ -1,15 +1,16 @@
 (()=>{
-    //Colors
+    // Colors
     let color1 = "#0000ff";
     let color2 = "#ff0000";
     let color3 = "#800080";
+    let colordefault = "#949494";
 
-    //Game States
+    // Game State
     let isCalculating = false; //Se a pessoa tem bugar o sistema alterando o HTML, o código do botão não será executado enquanto essa variável não for false
 
-    //Gems
+    // Gems
     const gems = document.querySelectorAll(".gem-box");
-    //Sets Gems colors
+    // Escolhe a cor de cada Gem
     gems[0].firstElementChild.style.backgroundColor = color1;
     gems[1].firstElementChild.style.backgroundColor = color2;
     gems[2].firstElementChild.style.backgroundColor = color3;
@@ -31,19 +32,62 @@
     - 2, 5, 8, 11 = color3
     */
 
-    //Buttons
+    // Buttons
     const btnStart = document.querySelector("#btn-start");
 
-    //Inputs
+    // Inputs
     const rdoColors = document.querySelectorAll("input[name='rdo-color']");
     const inpBet = document.querySelector("#inp-bet");
 
-    //Balance
+    // Show Results - Para acessar a div que mostra uma animação ao jogador sobre o status de sua aposta (win ou lose)
+    const divShowResult = document.querySelector("#div-show-result");
+    const spnResult = document.querySelector("#spn-result");
+
+    // Balance - Para manipular o saldo tanto visualmente quanto para controle na programação
     const spnBalance = document.querySelector("#balance");
     let balance = 100;
 
-    //Bet
+    // Bet - Para guardar valor de aposta do jogador
     let bet = 0;
+
+    // Selected Color - Cor selecionada pelo jogador
+    let selectedColor = "none";
+
+    btnStart.addEventListener("mouseenter", () => {
+
+        for(const rdoColor of rdoColors) {
+            if (rdoColor.checked)
+            {
+                selectedColor = rdoColor.value;
+                break;
+            }
+            else
+            {
+                selectedColor = "none";
+            }
+        } 
+
+        switch (selectedColor) {
+            case "color1":
+                btnStart.style.backgroundColor = color1;
+                break;
+            case "color2":
+                btnStart.style.backgroundColor = color2;
+                break;
+            case "color3":
+                btnStart.style.backgroundColor = color3;
+                break;
+            case "none":
+                btnStart.style.backgroundColor = colordefault;
+                break;
+            default:
+                break;
+        }
+    })
+
+    btnStart.addEventListener("mouseleave", () => {
+        btnStart.style.backgroundColor = "#fff";
+    })
 
     btnStart.addEventListener("click", (event) => {
 
@@ -73,7 +117,6 @@
                 return;
             }
             //Verifica a cor selecionada
-            let selectedColor;
             for(const rdoColor of rdoColors) {
                 if (rdoColor.checked)
                 {
@@ -94,8 +137,8 @@
                 return;
             }
 
-            //Gera um valor aleatório para ser a gem selecionada
-            let random = generateRandomIntInRange(1, 12);
+            //Gera um valor aleatório para ser a gem selecionada (0 à 11 porque são os indexes de gems possiveis)
+            let random = generateRandomIntInRange(0, 11);
 
         //Animation
         // Primeira volta
@@ -184,7 +227,7 @@
                             console.log("Nenhuma cor selecionada???");
                             break;
                     }
-                }, 3600)
+                }, 300 * random); //random é o index da gem correta. Logo, o timeout deve esperar 300ms para cada gem até a correta
 
             }, 1800);
 
@@ -192,6 +235,7 @@
         
     })
 
+    // Função para desabilitar botões e inputs que o jogador pode interajir
     function DisableButtons(state) {
         rdoColors.forEach(rdo => {
             rdo.disabled = state;
@@ -200,21 +244,45 @@
         inpBet.disabled = state;
     }
 
+    // Função para gerar números aleatórios
     function generateRandomIntInRange(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
+    // Função executada quando jogador vence o jogo
     function WinBet() {
+        //Mostrando resultado visualmente para jogador
+        spnResult.innerHTML = "+" + bet.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})
+        spnResult.className = "win-bet"
+        divShowResult.style.display = "flex"
+
+        setTimeout(()=>{
+            spnResult.className = ""
+            divShowResult.style.display = "none"
+        }, 2000)
+
         balance += bet
         spnBalance.innerHTML = balance.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})
-        isCalculating = false;
+        isCalculating = false
         DisableButtons(false)
     }
 
+    // Função executada quando jogador perde o jogo
     function LoseBet() {
+        //Mostrando resultado visualmente para jogador
+        spnResult.innerHTML = "-" + bet.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})
+        spnResult.className = "lose-bet"
+        divShowResult.style.display = "flex"
+
+        //Escondendo efeito de resultado
+        setTimeout(()=>{
+            spnResult.className = ""
+            divShowResult.style.display = "none"
+        }, 2000)
+
         balance -= bet
         spnBalance.innerHTML = balance.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})
-        isCalculating = false;
+        isCalculating = false
         DisableButtons(false)
     }
 

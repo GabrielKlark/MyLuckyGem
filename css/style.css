@@ -9,6 +9,11 @@
     padding: 0;
 }
 
+body {
+    background-color: #f5f5f5;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .bg-color1 {
     background-color: var(--color1);
 }
@@ -31,7 +36,8 @@ header {
 }
 header span {
     background-color: #a1a1fa;
-    border-radius: 5px;
+    border-radius: 10px;
+    padding: 5px;
 }
 
 .sec-game {
@@ -117,8 +123,9 @@ header span {
 
     transition: all 500ms;
 }
+
 .main-buttons .game button:hover {
-    background-color: #000;
+    color: #fff;
 }
 
 .main-buttons .bet-selection input {
@@ -126,4 +133,63 @@ header span {
 
     height: 50px;
     width: 80px;
+}
+
+.show-result {
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10;
+
+    height: 100vh;
+    width: 100vw;
+}
+
+.show-result span {
+    animation: none;
+    font-size: 30px;
+    opacity: 0;
+}
+@keyframes motion {
+    0% {
+        transform: translateY(50px) rotate(0deg);
+    }
+    100% {
+        transform: translateY(-50px) rotate(2deg);
+        opacity: .6;
+    }
+}
+
+.show-result .lose-bet {
+    color: #ff0000;
+    text-shadow: 
+        100px 100px 0 #ff0000,
+        300px 200px 0 #ff0000,
+        250px -100px 0 #ff0000,
+        400px 50px 0 #ff0000,
+        -100px -100px 0 #ff0000,
+        -300px -200px 0 #ff0000,
+        -250px 100px 0 #ff0000,
+        -400px -50px 0 #ff0000;
+}
+.show-result .win-bet {
+    color: #41ce00;
+    text-shadow: 
+        100px 100px 0 #41ce00,
+        300px 200px 0 #41ce00,
+        250px -100px 0 #41ce00,
+        400px 50px 0 #41ce00,
+        -100px -100px 0 #41ce00,
+        -300px -200px 0 #41ce00,
+        -250px 100px 0 #41ce00,
+        -400px -50px 0 #41ce00;
+}
+
+.lose-bet,
+.win-bet {
+    animation: motion 1s ease-in forwards 2 alternate!important;
 }
