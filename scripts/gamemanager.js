@@ -108,10 +108,10 @@
 
         //Guarda Dados
         bet = Number(inpBet.value);
-        //Verifica se aposta é negativa
-        if(bet < 0)
+        //Verifica se aposta é negativa ou nula
+        if(bet <= 0)
         {
-            alert(`A aposta não pode ser um valor negativo!`)
+            alert(`A aposta tem que ser um valor acima de zero!`)
             DisableButtons(false)
             isCalculating = false
             return;
