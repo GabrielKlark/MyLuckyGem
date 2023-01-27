@@ -107,38 +107,46 @@
         });
 
         //Guarda Dados
-            //Verifica se aposta não é maior que saldo
-            bet = Number(inpBet.value);
-            if(bet > balance)
+        bet = Number(inpBet.value);
+        //Verifica se aposta é negativa
+        if(bet < 0)
+        {
+            alert(`A aposta não pode ser um valor negativo!`)
+            DisableButtons(false)
+            isCalculating = false
+            return;
+        }
+        //Verifica se aposta não é maior que saldo
+        if(bet > balance)
+        {
+            alert(`Aposta maior que saldo!\nSaldo: ${balance.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}\nAposta: R$ ${bet.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}`)
+            DisableButtons(false)
+            isCalculating = false
+            return;
+        }
+        //Verifica a cor selecionada
+        for(const rdoColor of rdoColors) {
+            if (rdoColor.checked)
             {
-                alert(`Aposta maior que saldo!\nSaldo: ${spnBalance.innerHTML}\nAposta: R$ ${inpBet.value}`)
-                DisableButtons(false)
-                isCalculating = false;
-                return;
+                selectedColor = rdoColor.value;
+                break;
             }
-            //Verifica a cor selecionada
-            for(const rdoColor of rdoColors) {
-                if (rdoColor.checked)
-                {
-                    selectedColor = rdoColor.value;
-                    break;
-                }
-                else
-                {
-                    selectedColor = "none";
-                }
-            }
-            //Se nenhuma foi selecionada, para execução e reativa o botão
-            if(selectedColor == "none")
+            else
             {
-                alert("Nenhuma cor selecionada para a aposta!")
-                DisableButtons(false)
-                isCalculating = false;
-                return;
+                selectedColor = "none";
             }
+        }
+        //Se nenhuma foi selecionada, para execução e reativa o botão
+        if(selectedColor == "none")
+        {
+            alert("Nenhuma cor selecionada para a aposta!")
+            DisableButtons(false)
+            isCalculating = false;
+            return;
+        }
 
-            //Gera um valor aleatório para ser a gem selecionada (0 à 11 porque são os indexes de gems possiveis)
-            let random = generateRandomIntInRange(0, 11);
+        //Gera um valor aleatório para ser a gem selecionada (0 à 11 porque são os indexes de gems possiveis)
+        let random = generateRandomIntInRange(0, 11);
 
         //Animation
         // Primeira volta
